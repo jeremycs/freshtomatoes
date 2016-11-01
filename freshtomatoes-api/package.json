@@ -1,0 +1,22 @@
+{
+  "name": "freshtomatoes-api",
+  "version": "0.0.1",
+  "description": "API for freshtomatoes - a movie rating system",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app/app.js"
+  },
+  "author": "Jeremy Lozano",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "config": "^1.21.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "express-winston": "^2.0.0",
+    "lodash": "^4.16.4",
+    "mysql": "^2.11.1",
+    "sequelize": "^3.24.6",
+    "winston": "^2.2.0"
+  }
+}
