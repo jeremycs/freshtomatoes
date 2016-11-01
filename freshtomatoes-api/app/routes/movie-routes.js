@@ -18,7 +18,7 @@ module.exports = function() {
 
     // create new movie
     router.post('/movie', function(req, res) {
-      if (!req.query || !req.query.movieName || !req.query.imageUrl || !req.query.rating || !req.query.description) {
+      if (!req.body || !req.body.movieName || !req.body.imageUrl || !req.body.rating || !req.body.description) {
         res.json({
           success: false,
           message: 'missing fields',
@@ -26,14 +26,14 @@ module.exports = function() {
         return;
       }
 
-      movieController.createMovie(req.query.movieName, req.query.imageUrl, req.query.rating, req.query.description, function(payload) {
+      movieController.createMovie(req.body.movieName, req.body.imageUrl, req.body.rating, req.body.description, function(payload) {
         res.json(payload);
       });
     });
 
     // update existing movie
     router.put('/movie/:id', function(req, res) {
-      if (!req.query || !req.params.id || !req.query.movieName || !req.query.imageUrl || !req.query.rating || !req.query.description) {
+      if (!req.body || !req.params.id || !req.body.movieName || !req.body.imageUrl || !req.body.rating || !req.body.description) {
         res.json({
           success: false,
           message: 'missing fields',
@@ -41,14 +41,14 @@ module.exports = function() {
         return;
       }
 
-      movieController.updateMovie(req.params.id, req.query.movieName, req.query.imageUrl, req.query.rating, req.query.description, function(payload) {
+      movieController.updateMovie(req.params.id, req.body.movieName, req.body.imageUrl, req.body.rating, req.body.description, function(payload) {
         res.json(payload);
       });
     });
 
     // delete existing movie
     router.delete('/movie/:id', function(req, res) {
-      if (!req.query || !req.params.id) {
+      if (!req.body || !req.params.id) {
         res.json({
           success: false,
           message: 'missing fields',

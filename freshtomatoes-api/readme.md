@@ -28,25 +28,23 @@ Execute sql script **bootstrap/bootstrap.sql** with a db user (freshtomatoes app
 
 ## API endpoints:
 ### /movie - GET - retrieves all movies
-**Query Parameters:**  
-None
 
 ### /movie - POST - creates a new movie
-**Query Parameters:**  
+**Request Body Data:**  
 - movieName: string  
 - imageUrl: string  
 - rating: string  
 - description: string 
 
 ### /movie/{ID} - PUT - updates an existing movie
-**Query Parameters:**  
+**Request Body Data:**  
 - movieName: string  
 - imageUrl: string  
 - rating: string  
 - description: string 
 
 ### /movie/{ID} - DELETE - deletes an existing movie  
-**Query Parameters:**  
+**Request Body Data:**  
 None
 
 ## Example usage:
