@@ -1,0 +1,147 @@
+class MovieBlock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      descriptionDisplay: 'none',
+      blockBgColor: '#FFF6C7'
+    };
+
+    this.toggleDescription = this.toggleDescription.bind(this);
+  }
+
+  toggleDescription() {
+    if (this.state.descriptionDisplay === 'none') {
+      this.setState({
+        descriptionDisplay: 'inline',
+        blockBgColor: '#FFFAE0'
+      });
+    }
+    else {
+      this.setState({
+        descriptionDisplay: 'none',
+        blockBgColor: '#FFF6C7'
+      });
+    }
+  }
+
+  render() {
+    var descriptionStyle = {
+      display: this.state.descriptionDisplay
+    };
+
+    var movieBlockStyle = {
+      background: this.state.blockBgColor
+    }
+
+    return (
+      <div className="movie-block" style={movieBlockStyle}>
+        <img className="movie-thumbnail" src={this.props.movie.image_url} />
+        <br />
+        <span className="movie-name" onClick={this.toggleDescription}>
+          {this.props.movie.movie_name}
+        </span>
+        <br />
+        <div className="movie-rating">
+          Rating: {this.props.movie.rating}
+        </div>
+        <br />
+        <span className="movie-description" style={descriptionStyle}>
+          {this.props.movie.description}
+        </span>
+      </div>
+    );
+  }
+}
+
+class MovieList extends React.Component {
+  render() {
+    var rows = [];
+    var filter = this.props.filterText.toLowerCase();
+    this.props.movies.forEach(function(movie) {
+      var currentName = movie.movie_name.toLowerCase();
+      if (currentName.indexOf(filter) === -1) {
+        return;  
+      }
+      rows.push(<MovieBlock movie={movie} key={movie.id} />);
+    });
+    return (
+      <div className="movie-list">
+        {rows}
+      </div>
+    );
+  }
+}
+
+
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange() {
+    this.props.onUserInput(
+      this.refs.filterTextInput.value
+    );
+  }
+  
+  render() {
+    return (
+      <div id="search-bar-container">
+        <input id="search-bar"
+          type="search"
+          placeholder="Search Movie Name..."
+          value={this.props.filterText}
+          ref="filterTextInput"
+          onChange={this.handleChange}
+        />
+      </div>
+    );
+  }
+}
+
+class SearchableMovieList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterText: '',
+      movies: []
+    };
+    
+    this.handleUserInput = this.handleUserInput.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get(`http://localhost:3200/movie`)
+      .then(res => {
+        this.setState({ 
+          movies: res.data.movies
+        });
+      });
+  }
+
+  handleUserInput(filterText) {
+    this.setState({
+      filterText: filterText
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <SearchBar
+          filterText={this.state.filterText}
+          onUserInput={this.handleUserInput}
+        />
+        <MovieList
+          movies={this.state.movies}
+          filterText={this.state.filterText}
+        />
+      </div>
+    );
+  }
+}
+ 
+ReactDOM.render(
+  <SearchableMovieList />, document.getElementById('container')
+);
