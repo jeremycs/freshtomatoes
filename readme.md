@@ -1,6 +1,6 @@
-This repository is split into two decoupled applications:
+This branch of the repository takes the two decoupled applications (ui + api) and merges the logic into an isomorphic application:
 - API: implemented in node/express
 - UI: impemented in react
 
 #### Instructions
-Follow instructions in each respective project README
+Instructions to follow
